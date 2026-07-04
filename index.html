@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <!-- 這行是響應式網頁的關鍵，能讓網頁大小自動適應手機與電腦螢幕 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的響應式產品展示頁</title>
+    <!-- 引入 Bootstrap 5 CSS 響應式框架 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 引入 FontAwesome 圖標庫 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* 輪動 Banner 自適應高度設定，防止圖片在不同螢幕上變形 */
+        .hero-carousel-img {
+            height: 55vh; /* 佔螢幕高度的 55% */
+            min-height: 320px; /* 手機上最低高度 */
+            max-height: 550px; /* 電腦上最高高度 */
+            object-fit: cover; /* 圖片自動裁切填滿，不擠壓變形 */
+        }
+        /* 產品照片自適應 */
+        .product-img {
+            height: 240px;
+            object-fit: cover;
+        }
+        /* 微調卡片滑過效果 */
+        .product-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15) !important;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+    <!-- 1. 頂部導覽列 (在手機上會自動收合成漢堡選單) -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#"><i class="fa-solid fa-shop me-2"></i>品牌商務館</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#">首頁</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#products">精選商品</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">聯絡我們</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. 自動輪動 Banner (Carousel) -->
+    <div id="heroCarousel" class="carousel slide shadow-sm" data-bs-ride="carousel" data-bs-interval="4000">
+        <!-- 底部切換指示點 -->
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+        </div>
+        <!-- 輪播內容 -->
+        <div class="carousel-inner">
+            <!-- 幻燈片 1 -->
+            <div class="carousel-item active">
+                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1200&q=80" class="d-block w-100 hero-carousel-img" alt="熱門藍牙耳機">
+                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-4 rounded">
+                    <h2 class="fw-bold">年度主打：頂級降噪耳機</h2>
+                    <p>沉浸式音效體驗，將噪音隔絕在外。</p>
+                    <a href="#products" class="btn btn-primary btn-sm">立即選購</a>
+                </div>
+            </div>
+            <!-- 幻燈片 2 -->
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=80" class="d-block w-100 hero-carousel-img" alt="極簡智慧手錶">
+                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-4 rounded">
+                    <h2 class="fw-bold">智慧生活：極簡健康追蹤錶</h2>
+                    <p>全天候健康管理，時尚與科技完美結合。</p>
+                    <a href="#products" class="btn btn-primary btn-sm">了解詳情</a>
+                </div>
+            </div>
+            <!-- 幻燈片 3 -->
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1200&q=80" class="d-block w-100 hero-carousel-img" alt="運動潮流鞋">
+                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-4 rounded">
+                    <h2 class="fw-bold">極致舒適：輕量慢跑鞋</h2>
+                    <p>專為高強度運動設計，提供完美的回彈支撐。</p>
+                    <a href="#products" class="btn btn-primary btn-sm">探索款式</a>
+                </div>
+            </div>
+        </div>
+        <!-- 左右切換按鈕 -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide-next="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+
+    <!-- 3. 產品展示區 (響應式網格系統) -->
+    <div class="container my-5" id="products">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">熱門精選產品</h2>
+            <p class="text-muted">電腦上顯示 3 欄，平板顯示 2 欄，手機上自動變為 1 欄排列</p>
+        </div>
+
+        <!-- 
+          g-4: 卡片間距
+          row-cols-1: 手機上 1 欄
+          row-cols-md-2: 平板上 2 欄
+          row-cols-lg-3: 電腦上 3 欄
+        -->
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            
+            <!-- 產品 1 -->
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 product-card">
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80" class="card-img-top product-img" alt="無線頭戴耳機">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fw-bold">無線降噪頭戴耳機</h5>
+                        <p class="card-text text-muted flex-grow-1">配備主動降噪（ANC）與高解析度音頻，提供長達 30 小時的強勁續航力。</p>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <span class="fs-5 fw-bold text-primary">NT$ 5,990</span>
+                            <!-- 超連結按鈕 -->
+                            <a href="https://example.com/product1" target="_blank" class="btn btn-outline-primary btn-sm">立即購買 <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 產品 2 -->
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 product-card">
+                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80" class="card-img-top product-img" alt="簡約智慧手錶">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fw-bold">簡約時尚智慧手錶</h5>
+                        <p class="card-text text-muted flex-grow-1">可精準偵測心率、血氧與睡眠品質，並支援與手機訊息同步提示功能。</p>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <span class="fs-5 fw-bold text-primary">NT$ 3,480</span>
+                            <a href="https://example.com/product2" target="_blank" class="btn btn-outline-primary btn-sm">立即購買 <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 產品 3 -->
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 product-card">
+                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80" class="card-img-top product-img" alt="運動跑鞋">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fw-bold">專業輕量運動跑鞋</h5>
+                        <p class="card-text text-muted flex-grow-1">超輕透氣網布鞋面搭配耐磨橡膠大底，無論日常慢跑或健身皆極度舒適。</p>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <span class="fs-5 fw-bold text-primary">NT$ 2,800</span>
+                            <a href="https://example.com/product3" target="_blank" class="btn btn-outline-primary btn-sm">立即購買 <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 4. 頁尾區 -->
+    <footer class="bg-dark text-white py-4 mt-5" id="contact">
+        <div class="container text-center">
+            <p class="mb-2">© 2026 品牌商務館 版權所有</p>
+            <div class="mb-3">
+                <a href="#" class="text-white me-3 text-decoration-none"><i class="fa-brands fa-facebook fa-lg"></i></a>
+                <a href="#" class="text-white me-3 text-decoration-none"><i class="fa-brands fa-instagram fa-lg"></i></a>
+                <a href="#" class="text-white text-decoration-none"><i class="fa-brands fa-line fa-lg"></i></a>
+            </div>
+            <small class="text-muted">若要修改內容，請直接編輯 HTML 中的文字與連結。</small>
+        </div>
+    </footer>
+
+    <!-- 引入 Bootstrap 5 JS 檔案 (這行負責輪播圖的滾動與選單折疊功能) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
